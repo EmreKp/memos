@@ -36,9 +36,7 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: |
-            neosmemo/memos
-            ghcr.io/usememos/memos
+          image: EmreKp/memos
           flavor: |
             latest=false
           tags: |
