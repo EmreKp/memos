@@ -36,7 +36,8 @@ jobs:
         id: meta
         uses: docker/metadata-action@v5
         with:
-          image: EmreKp/memos
+          images: |
+            EmreKp/memos
           flavor: |
             latest=false
           tags: |
