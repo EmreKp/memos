@@ -53,11 +53,13 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 		// The filter string should be a CEL expression.
 		parsedExpr, err := filter.Parse(*find.MemoFilter, filter.MemoFilterCELAttributes...)
 		if err != nil {
+			fmt.Println("error from parseExpr")
 			return nil, err
 		}
 		convertCtx := filter.NewConvertContext()
 		// ConvertExprToSQL converts the parsed expression to a SQL condition string.
 		if err := d.ConvertExprToSQL(convertCtx, parsedExpr.GetExpr()); err != nil {
+			fmt.Println("error from convertExprToSQL")
 			return nil, err
 		}
 		condition := convertCtx.Buffer.String()
@@ -76,6 +78,7 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 		FROM memo_relation
 		WHERE `+strings.Join(where, " AND "), args...)
 	if err != nil {
+		fmt.Println("error from memo relation select")
 		return nil, err
 	}
 	defer rows.Close()
@@ -88,12 +91,14 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 			&memoRelation.RelatedMemoID,
 			&memoRelation.Type,
 		); err != nil {
+			fmt.Println("error from memo relation scan")
 			return nil, err
 		}
 		list = append(list, memoRelation)
 	}
 
 	if err := rows.Err(); err != nil {
+		fmt.Println("error from rows")
 		return nil, err
 	}
 
