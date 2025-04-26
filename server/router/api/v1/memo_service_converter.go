@@ -57,7 +57,7 @@ func (s *APIV1Service) convertMemoFromStore(ctx context.Context, memo *store.Mem
 
 	listMemoRelationsResponse, err := s.ListMemoRelations(ctx, &v1pb.ListMemoRelationsRequest{Name: name})
 	if err != nil {
-		return nil, errors.Wrap(err, "failed to list memo relations")
+		return nil, errors.Wrap(err, "CONVERT MEMO: failed to list memo relations")
 	}
 	memoMessage.Relations = listMemoRelationsResponse.Relations
 

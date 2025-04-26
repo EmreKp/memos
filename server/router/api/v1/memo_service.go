@@ -526,7 +526,7 @@ func (s *APIV1Service) ListMemoComments(ctx context.Context, request *v1pb.ListM
 		MemoFilter:    &memoFilter,
 	})
 	if err != nil {
-		return nil, status.Errorf(codes.Internal, "failed to list memo relations")
+		return nil, status.Errorf(codes.Internal, "MEMO COMENTO: failed to list memo relations")
 	}
 
 	var memos []*v1pb.Memo
