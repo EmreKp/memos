@@ -78,6 +78,8 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 		FROM memo_relation
 		WHERE `+strings.Join(where, " AND "), args...)
 	if err != nil {
+		fmt.Println("WHERE query: " + strings.Join(where, " AND "))
+		fmt.Println("args query: ", args)
 		fmt.Println("error from memo relation select")
 		return nil, err
 	}
