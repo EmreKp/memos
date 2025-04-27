@@ -41,6 +41,7 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 	where, args := []string{"1 = 1"}, []any{}
 	if find.MemoID != nil {
 		where, args = append(where, "memo_id = "+placeholder(len(args)+1)), append(args, find.MemoID)
+		//fmt.Println("WHERE 1: ", where)
 	}
 	if find.RelatedMemoID != nil {
 		where, args = append(where, "related_memo_id = "+placeholder(len(args)+1)), append(args, find.RelatedMemoID)
@@ -66,7 +67,7 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 		if condition != "" {
 			where = append(where, fmt.Sprintf("memo_id IN (SELECT id FROM memo WHERE %s)", condition))
 			where = append(where, fmt.Sprintf("related_memo_id IN (SELECT id FROM memo WHERE %s)", condition))
-			args = append(args, append(convertCtx.Args, convertCtx.Args...)...)
+			// args = append(args, append(convertCtx.Args, convertCtx.Args...)...)
 		}
 	}
 
@@ -78,8 +79,13 @@ func (d *DB) ListMemoRelations(ctx context.Context, find *store.FindMemoRelation
 		FROM memo_relation
 		WHERE `+strings.Join(where, " AND "), args...)
 	if err != nil {
-		fmt.Println("WHERE query: " + strings.Join(where, " AND "))
-		fmt.Println("args query: ", args)
+		/*fmt.Println("WHERE query: " + strings.Join(where, " AND "))
+		fmt.Println("args[0]: ", args[0])
+		fmt.Println("args[1]: ", args[1])
+		fmt.Println("args[2]: ", args[2])
+		fmt.Println("args[3]: ", args[3])
+		fmt.Println("args[4]: ", args[4])
+		fmt.Println("args[5]: ", args[5])*/
 		fmt.Println("error from memo relation select")
 		return nil, err
 	}
